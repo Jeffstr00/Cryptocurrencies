@@ -10,6 +10,10 @@ However, maybe the possibility still exists with other newer cryptocurrencies.  
 
 ### Preprocessing Data
 
+While unsupervised machine learning programs are able to discover things "on their own," they first must be provided with workable data.  Our first step was to do some standard cleaning to get rid of currencies that did not meet our standards off the bat.  We ensured that all of the currencies we considered were actively being traded using `traded_df = crypto_df[crypto_df["IsTrading"] == True]`, have a working algorithm using `working_df = traded_df[traded_df['Algorithm'].notna()]`, had complete information using `clean_df = working_df.dropna()`, and actually had coins mined with `mined_df = clean_df[clean_df["TotalCoinsMined"] > 0]`.
+
+Once we had our baseline qualifications met, we needed to translate our non-number columns into numbers that our machine learning programs could work with.  To do so, we used the get_dummies function to instead turn those columns into different "yes (1) or no (0)" columns: `X = pd.get_dummies(mined_df, columns=['Algorithm', 'ProofType'])`.  We also used StandardScaler to scale our data so that the results wouldn't be warped by exceptionally big numbers in the data: `crypto_scaled = StandardScaler().fit_transform(X)`.
+
 ### Reducing Data Dimensions
 
 ### Clustering Cryptocurrencies
