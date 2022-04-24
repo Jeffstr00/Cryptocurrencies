@@ -22,6 +22,34 @@ In order to help the algorithm deal with a large number of input features, we em
 
 ### Clustering Cryptocurrencies
 
+While we originally started off with over a thousand different crytocurrencies, even after paring that number down, we were still left with a hefty list of 685 different currencies.  In order to better understand and handle that information, we next turned to clustering, which is unsupervised learning that groups similar data points together.  In this case, we used the K-means clustering algorithm, which groups data into clusters depending on their distance to a centroid point.
+
+However, before jumping in and getting started, we had to know how many clusters the data should be divided into.  Rather than just picking a number out of the air (or resulting to trial and error), we decided that it would be prudent determine which value would actually be best.  In order to do this, we calculated the inertia that we would find for k number of clusters using the following code:
+`for i in k:
+    km = KMeans(n_clusters=i, random_state=0)
+    km.fit(pcs_df)
+    inertia.append(km.inertia_)`
+Once we had the inertias calculated, we graphed it using:
+`elbow_data = {"k": k, "inertia": inertia}
+df_elbow = pd.DataFrame(elbow_data)
+df_elbow.hvplot.line(x="k", y="inertia", xticks=k, title="Elbow Curve")`
+This provided us with a graph that shows the inertia for each k number of clusters.  This is a clear drastic change (that resembles an elbow) at 4 clusters, so that is the number we will go with in order to have the most distinct groups.
+
+![Elbow Curve](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/elbow.png)
+
+With our ideal number of clusters known, we were now able to run the K-means model to seperate the data into distinct groups:
+`model = KMeans(n_clusters=4, random_state=0)
+model.fit(pcs_df)
+predictions = model.predict(pcs_df)`
+
 ### Visualization
+
+While it was nice for us that we had the data separated into clusters of similar cryptocurrencies, our end goal is conveying that information to Martha and the other managers at Accountability Accounting.  While we have all of our finished information in a tidy, sortable table that is very useful, we really wanted to be able to illustrate our findings with the different coins.  In order to help accomplish this, we created both a 2-D plot displaying each coin's total supply vs. how much as been mined and an interactive 3-D scatter plot showing how the coins are clustered into four groups depending on their aformentioned principal components.
+
+![Unsorted Table](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/table_unsorted.png)
+
+![2-D Scatter Plot](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/2d_scatter.png)
+
+![3-D Scatter Plot](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/3d_scatter.png)
 
 ## Summary
