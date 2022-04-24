@@ -4,7 +4,7 @@
 
 Martha is a senior manager for Accountability Accounting's Advisory Services Team, and she has has asked for our help.  The investment bank is interested in entering the new world of cryptocurrency.  Bitcoin's meteoric rise over the past decade has shown the tremendous potential for profitability (although not without its risks).  However, while that high price represents what is possible when investing in crypto, it also means that jumping on board the Bitcoin train is going to require a very expensive boarding ticket.  As a result, at this stage in the virtual gold rush, it seems unlikely that you can still "strike it rich" by hopping aboard that now very packed train.
 
-However, maybe the possibility still exists with other newer cryptocurrencies.  But, with so many different cryptocurrencies out there, how could the company hope to find good currencies to invest in when there are so many fool's gold currencies out there?  Luckily, Martha came prepared.  She has provided us with a spreadsheet featuring information on 1253 different cryptocurrencies including whether or not it's being traded, its proof type, total coins mined, and the total coin supply.  Since we don't know exactly what output we're looking for, she asks us to use unsupervised machine learning to categorize the currencies.  Hopefully, doing so will seperate the currencies with good potential from the duds and provide the company with an idea for which currencies to consider investing in.
+However, maybe the possibility still exists with other, newer cryptocurrencies.  But, with so many different cryptocurrencies out there, how could the company hope to find good currencies to invest in when there are so many fool's gold currencies out there?  Luckily, Martha came prepared.  She has provided us with a spreadsheet featuring information on 1,253 different cryptocurrencies including whether or not it's being traded, its proof type, total coins mined, and the total coin supply.  Since we don't know exactly what output we're looking for, she asks us to use unsupervised machine learning to categorize the currencies.  Hopefully, doing so will seperate the currencies with good potential from the duds and provide the company with an idea for which currencies to consider investing in.
 
 ## Results
 
@@ -24,23 +24,23 @@ In order to help the algorithm deal with a large number of input features, we em
 
 While we originally started off with over a thousand different crytocurrencies, even after paring that number down, we were still left with a hefty list of 685 different currencies.  In order to better understand and handle that information, we next turned to clustering, which is unsupervised learning that groups similar data points together.  In this case, we used the K-means clustering algorithm, which groups data into clusters depending on their distance to a centroid point.
 
-However, before jumping in and getting started, we had to know how many clusters the data should be divided into.  Rather than just picking a number out of the air (or resulting to trial and error), we decided that it would be prudent determine which value would actually be best.  In order to do this, we calculated the inertia that we would find for k number of clusters using the following code:
-`for i in k:
+However, before jumping in and getting started, we had to know how many clusters the data should be divided into.  Rather than just picking a number out of the air (or resulting to trial and error), we decided that it would be prudent to determine which value would actually be best.  In order to do this, we calculated the inertia that we would find for k number of clusters using the following code:
+```for i in k:
     km = KMeans(n_clusters=i, random_state=0)
     km.fit(pcs_df)
-    inertia.append(km.inertia_)`
+    inertia.append(km.inertia_)```
 Once we had the inertias calculated, we graphed it using:
-`elbow_data = {"k": k, "inertia": inertia}
+```elbow_data = {"k": k, "inertia": inertia}
 df_elbow = pd.DataFrame(elbow_data)
-df_elbow.hvplot.line(x="k", y="inertia", xticks=k, title="Elbow Curve")`
-This provided us with a graph that shows the inertia for each k number of clusters.  This is a clear drastic change (that resembles an elbow) at 4 clusters, so that is the number we will go with in order to have the most distinct groups.
+df_elbow.hvplot.line(x="k", y="inertia", xticks=k, title="Elbow Curve")```
+This provided us with a graph that shows the inertia for each k number of clusters.  There is a clear drastic change (that resembles an elbow) at 4 clusters, so that is the number we will go with in order to have the most distinct groups.
 
 ![Elbow Curve](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/elbow.png)
 
 With our ideal number of clusters known, we were now able to run the K-means model to seperate the data into distinct groups:
-`model = KMeans(n_clusters=4, random_state=0)
+```model = KMeans(n_clusters=4, random_state=0)
 model.fit(pcs_df)
-predictions = model.predict(pcs_df)`
+predictions = model.predict(pcs_df)```
 
 ### Visualization
 
@@ -56,8 +56,8 @@ While it was nice for us that we had the data separated into clusters of similar
 
 Overall, we used processing with Pandas, Principal Component Analysis, and K-Means clustering to turn what was a large CSV file full of cryptocurrency data into a clean set of active coins which are split into separate groups.  We then displayed this information in not just a standard table, but in a set of cluster plots as well.  But how can this information be of use to the company?
 
-We didn't need to perform all of this analysis to discover that coins such as BitCoin and Ethereum have so far been big winners which have created a lot of wealth.  However, while they still may be good investments over time as they are (relative to other cryptocurrencies) proven and reliable, investors at this point have most likely missed their chance for explosive growth.  However, that potential still may exist for other lesser known coins out there.  But, with so many options available (and likely featuring many, many more losers than winners), trying to guess the next big thing is likely to be a losing proposition.
+We didn't need to perform all of this analysis to discover that coins such as BitCoin and Ethereum have so far been big winners which have created a lot of wealth.  However, while they still may be good investments over time as they are (relative to other cryptocurrencies) proven and reliable, investors at this point have most likely missed their chance at explosive growth.  However, that potential still may exist for other lesser known coins out there.  But, with so many options available (and likely featuring many, many more losers than winners), trying to guess the next big thing is likely to be a losing proposition.
 
-Luckily, with our data conveniently seperated into coins with similar characteristics, one strategy for identifying coins poised to break out would be to look at those which are grouped with the proven winners such as BitCoin, Ethereum, and Litecoin, but still have low value.  Identifying these potential supernovas before they explode might give investors a chance to possibly achieve gains at least in the same vein as the successful cryptocurrencies have previously experienced.
+Luckily, with our data conveniently seperated into coins with similar characteristics, one strategy for identifying coins poised to break out would be to look at those which are grouped with the proven winners (such as BitCoin, Ethereum, and Litecoin), but still have low value.  Identifying these potential supernovas before they explode might give investors a chance to possibly achieve gains at least in the same vein as those which the successful cryptocurrencies have previously experienced.
 
 ![Unsorted Table](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/table_class0.png)
