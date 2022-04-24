@@ -28,11 +28,13 @@ However, before jumping in and getting started, we had to know how many clusters
 ```for i in k:
     km = KMeans(n_clusters=i, random_state=0)
     km.fit(pcs_df)
-    inertia.append(km.inertia_)```
+    inertia.append(km.inertia_)
+```
 Once we had the inertias calculated, we graphed it using:
 ```elbow_data = {"k": k, "inertia": inertia}
 df_elbow = pd.DataFrame(elbow_data)
-df_elbow.hvplot.line(x="k", y="inertia", xticks=k, title="Elbow Curve")```
+df_elbow.hvplot.line(x="k", y="inertia", xticks=k, title="Elbow Curve")
+```
 This provided us with a graph that shows the inertia for each k number of clusters.  There is a clear drastic change (that resembles an elbow) at 4 clusters, so that is the number we will go with in order to have the most distinct groups.
 
 ![Elbow Curve](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/elbow.png)
@@ -40,7 +42,8 @@ This provided us with a graph that shows the inertia for each k number of cluste
 With our ideal number of clusters known, we were now able to run the K-means model to seperate the data into distinct groups:
 ```model = KMeans(n_clusters=4, random_state=0)
 model.fit(pcs_df)
-predictions = model.predict(pcs_df)```
+predictions = model.predict(pcs_df)
+```
 
 ### Visualization
 
