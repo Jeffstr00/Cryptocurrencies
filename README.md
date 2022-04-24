@@ -53,3 +53,11 @@ While it was nice for us that we had the data separated into clusters of similar
 ![3-D Scatter Plot](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/3d_scatter.png)
 
 ## Summary
+
+Overall, we used processing with Pandas, Principal Component Analysis, and K-Means clustering to turn what was a large CSV file full of cryptocurrency data into a clean set of active coins which are split into separate groups.  We then displayed this information in not just a standard table, but in a set of cluster plots as well.  But how can this information be of use to the company?
+
+We didn't need to perform all of this analysis to discover that coins such as BitCoin and Ethereum have so far been big winners which have created a lot of wealth.  However, while they still may be good investments over time as they are (relative to other cryptocurrencies) proven and reliable, investors at this point have most likely missed their chance for explosive growth.  However, that potential still may exist for other lesser known coins out there.  But, with so many options available (and likely featuring many, many more losers than winners), trying to guess the next big thing is likely to be a losing proposition.
+
+Luckily, with our data conveniently seperated into coins with similar characteristics, one strategy for identifying coins poised to break out would be to look at those which are grouped with the proven winners such as BitCoin, Ethereum, and Litecoin, but still have low value.  Identifying these potential supernovas before they explode might give investors a chance to possibly achieve gains at least in the same vein as the successful cryptocurrencies have previously experienced.
+
+![Unsorted Table](https://github.com/Jeffstr00/Cryptocurrencies/blob/main/Resources/table_class0.png)
